@@ -11,6 +11,7 @@ def main(page: ft.Page):
         page.theme_mode = 'light' if page.theme_mode == 'dark' else 'dark'
         page.update()
 
+
     page.add(
     # Главный контейнер для размещения элементов
     ft.Column(
@@ -54,7 +55,23 @@ def main(page: ft.Page):
                     ft.ElevatedButton(text="Офисные"),
                     ft.ElevatedButton(text="Игровые"),
                 ]
+            ),
+
+            # Пропуск строки
+            ft.Container(height=5),
+            
+            ft.Row(
+                
+                    ft.ElevatedButton(text = "Сборка 1"),
+                    ft.ElevatedButton(text = "Сборка 2"),
+                    ft.ElevatedButton(text = "Сборка 3"),
+                    ft.ElevatedButton(text = "Сборка 4"),
+                    ft.ElevatedButton(text = "Сборка 5"),
+                    ft.ElevatedButton(text = "Сборка 6"),
+                    ft.ElevatedButton(text = "Сборка 7"),
+                    ft.ElevatedButton(text = "Сборка 8"),
             )
+
         ],
         expand=True  # Разрешаем Column занимать всё доступное пространство
     )
