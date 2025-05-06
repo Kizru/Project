@@ -9,6 +9,28 @@ def main(page: ft.Page):
     def go_back(e):
         pass
     
+    component_options = {
+        "Процессор": ["AMD Ryzen 7 7800X3D", "Intel Core i9-13900K"],
+        "Охлаждение": ["Noctua NH-D15", "NZXT Kraken X73"],
+        "SSD": ["Samsung 990 Pro", "Samsung 980 Pro"]
+    }
+    
+    def update_component_fields(e):
+        selected_type = component_type_dropdown.value
+        if selected_type:
+            components_row.controls[0].controls[0].value = f"{selected_type} 1"
+            components_row.controls[1].controls[0].value = f"{selected_type} 2"
+            
+            options = component_options.get(selected_type, [])
+            component1_dropdown.options = [ft.dropdown.Option(opt) for opt in options]
+            component2_dropdown.options = [ft.dropdown.Option(opt) for opt in options]
+            
+            if options:
+                component1_dropdown.value = options[0]
+                component2_dropdown.value = options[1] if len(options) > 1 else options[0]
+            
+            page.update()
+    
     header = ft.Row(
         controls=[
             ft.Text("Сравнение комплектующих", size=24, weight=ft.FontWeight.BOLD),
@@ -29,22 +51,15 @@ def main(page: ft.Page):
             ft.dropdown.Option("Охлаждение"),
             ft.dropdown.Option("SSD"),
         ],
-        width=400
+        width=400,
+        on_change=update_component_fields
     )
     
     component1_dropdown = ft.Dropdown(
-        options=[
-            ft.dropdown.Option("Вариант 1"),
-            ft.dropdown.Option("Вариант 2"),
-        ],
         width=200
     )
     
     component2_dropdown = ft.Dropdown(
-        options=[
-            ft.dropdown.Option("Вариант 1"),
-            ft.dropdown.Option("Вариант 2"),
-        ],
         width=200
     )
     
@@ -85,6 +100,6 @@ def main(page: ft.Page):
         components_row,
         ft.Divider(height=30, color=ft.colors.TRANSPARENT),
         compare_button
-)
+    )
 
 ft.app(target=main)
