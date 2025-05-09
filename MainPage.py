@@ -5,8 +5,56 @@ gaming_builds = [f"Игровая сборка {i}" for i in range(1, 11)]
 office_builds = [f"Офисная сборка {i}" for i in range(1, 11)]
 all_builds = gaming_builds + office_builds  # Все 20 сборок
 
+# Словарь с деталями сборок
 build_details = {
-    # Игровые сборки
+    "Игровая сборка 1": {
+        "Процессор": "Intel Core i5-13600K",
+        "Охлаждение": "Cooler Master Hyper 212 RGB",
+        "Материнская плата": "ASUS ROG Strix B660-A WIFI",
+        "Оперативная память": "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
+        "SSD": "Samsung 980 Pro 1TB NVMe M.2",
+        "Жесткий диск": "Seagate BarraCuda 4TB SATA III",
+        "Видеокарта": "NVIDIA GeForce RTX 4070 Ti",
+        "Блок питания": "Corsair RMx 850W Gold",
+        "Корпус": "Fractal Design Define Mini XL",
+    },
+    "Игровая сборка 2": {
+        "Процессор": "AMD Ryzen 7 7800X",
+        "Охлаждение": "Noctua NH-U12A",
+        "Материнская плата": "MSI MAG B660M Mortar WiFi",
+        "Оперативная память": "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
+        "SSD": "WD Black SN850X 2TB NVMe M.2",
+        "Жесткий диск": "Western Digital Blue 6TB SATA III",
+        "Видеокарта": "AMD Radeon RX 7900 XT",
+        "Блок питания": "EVGA SuperNOVA 850 G3 850W",
+        "Корпус": "NZXT H510 Elite",
+    },
+    "Офисная сборка 1": {
+        "Процессор": "Intel Core i5-13400",
+        "Охлаждение": "Cooler Master Hyper 212 EVO",
+        "Материнская плата": "ASUS TUF B660M-PLUS WIFI",
+        "Оперативная память": "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
+        "SSD": "Samsung 870 QVO 500GB SATA III",
+        "Жесткий диск": "Seagate Barracuda 2TB SATA III",
+        "Видеокарта": "NVIDIA GeForce GT 730 2GB",
+        "Блок питания": "Corsair RMx 550W Gold",
+        "Корпус": "Fractal Design Node 304",
+    },
+    "Офисная сборка 2": {
+        "Процессор": "AMD Ryzen 5 7600",
+        "Охлаждение": "Noctua NH-L9A",
+        "Материнская плата": "MSI B660M PRO WIFI",
+        "Оперативная память": "G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz",
+        "SSD": "WD Blue SN550 500GB NVMe M.2",
+        "Жесткий диск": "Western Digital Blue 4TB SATA III",
+        "Видеокарта": "AMD Radeon R5 230 2GB",
+        "Блок питания": "EVGA SuperNOVA 550 G3 550W",
+        "Корпус": "NZXT H440",
+    },
+}
+
+# Словарь с деталями сборок
+build_details = {
     "Игровая сборка 1": {
         "Процессор": "Intel Core i5-13600K",
         "Охлаждение": "Cooler Master Hyper 212 RGB",
@@ -31,8 +79,8 @@ build_details = {
     },
     "Игровая сборка 3": {
         "Процессор": "Intel Core i9-13900KF",
-        "Охлаждение": "Corsair Hydro X Series H115i RGB Platinum",
-        "Материнская плата": "Gigabyte Z790 AORUS Elite AX",
+        "Охлаждение": "DeepCool Gammaxx 400",
+        "Материнская плата": "ASRock X670E Taichi",
         "Оперативная память": "Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz",
         "SSD": "Kingston KC2500 2TB NVMe M.2",
         "Жесткий диск": "Toshiba P300 4TB SATA III",
@@ -42,8 +90,8 @@ build_details = {
     },
     "Игровая сборка 4": {
         "Процессор": "AMD Ryzen 9 7900X",
-        "Охлаждение": "NZXT Kraken X73",
-        "Материнская плата": "ASRock X670E Taichi",
+        "Охлаждение": "Arctic Freezer 34 eSports",
+        "Материнская плата": "Gigabyte Z790 AORUS Elite AX",
         "Оперативная память": "Crucial Ballistix 32GB (2x16GB) DDR5 6400MHz",
         "SSD": "Sabrent Rocket 4 Plus 2TB NVMe M.2",
         "Жесткий диск": "Hitachi GST Ultrastar 6TB SATA III",
@@ -52,73 +100,71 @@ build_details = {
         "Корпус": "Phanteks Enthoo Pro Mini",
     },
     "Игровая сборка 5": {
-        "Процессор": "Intel Core i5-13600K",
+        "Процессор": "Intel Core i7-13700",
         "Охлаждение": "Cooler Master Hyper 212 EVO",
         "Материнская плата": "ASUS TUF B660M-PLUS WIFI",
         "Оперативная память": "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
         "SSD": "Samsung 870 QVO 500GB SATA III",
         "Жесткий диск": "Seagate Barracuda 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce RTX 4070",
-        "Блок питания": "Corsair RMx 650W Gold",
+        "Видеокарта": "NVIDIA GeForce GT 730 2GB",
+        "Блок питания": "Corsair RMx 550W Gold",
         "Корпус": "Fractal Design Node 304",
     },
     "Игровая сборка 6": {
-        "Процессор": "AMD Ryzen 7 7800X",
+        "Процессор": "AMD Ryzen 5 7600",
         "Охлаждение": "Noctua NH-L9A",
         "Материнская плата": "MSI B660M PRO WIFI",
         "Оперативная память": "G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz",
         "SSD": "WD Blue SN550 500GB NVMe M.2",
         "Жесткий диск": "Western Digital Blue 4TB SATA III",
-        "Видеокарта": "AMD Radeon RX 7700 XT",
-        "Блок питания": "EVGA SuperNOVA 750 G3 750W",
+        "Видеокарта": "AMD Radeon R5 230 2GB",
+        "Блок питания": "EVGA SuperNOVA 550 G3 550W",
         "Корпус": "NZXT H440",
     },
     "Игровая сборка 7": {
-        "Процессор": "Intel Core i9-13900KF",
-        "Охлаждение": "DeepCool Gammaxx 400",
-        "Материнская плата": "Gigabyte B660M DS3H",
-        "Оперативная память": "Kingston ValueRAM 16GB (2x8GB) DDR4 2666MHz",
-        "SSD": "Kingston A400 480GB SATA III",
-        "Жесткий диск": "Toshiba P300 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce RTX 4080 SUPER",
-        "Блок питания": "Seasonic Prime TX 750W Gold",
-        "Корпус": "BitFenix Aurora",
-    },
-    "Игровая сборка 8": {
-        "Процессор": "AMD Ryzen 9 7900X",
-        "Охлаждение": "Arctic Freezer 34 eSports",
-        "Материнская плата": "ASRock B660M Pro RS",
-        "Оперативная память": "Crucial Ballistix 16GB (2x8GB) DDR5 5200MHz",
-        "SSD": "Sabrent Rocket 4 500GB NVMe M.2",
-        "Жесткий диск": "Hitachi GST Ultrastar 4TB SATA III",
-        "Видеокарта": "AMD Radeon RX 7900 GRE",
-        "Блок питания": "Thermaltake Toughpower GF1 750W Gold",
-        "Корпус": "Phanteks Eclipse P300",
-    },
-    "Игровая сборка 9": {
-        "Процессор": "Intel Core i7-13700",
+        "Процессор": "Intel Core i5-13400",
         "Охлаждение": "Cooler Master Hyper 212 RGB",
         "Материнская плата": "ASUS ROG Strix B660-A WIFI",
         "Оперативная память": "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
         "SSD": "Samsung 980 Pro 1TB NVMe M.2",
         "Жесткий диск": "Seagate BarraCuda 4TB SATA III",
-        "Видеокарта": "NVIDIA GeForce RTX 4070",
-        "Блок питания": "Corsair RMx 750W Gold",
+        "Видеокарта": "NVIDIA GeForce RTX 4070 Ti",
+        "Блок питания": "Corsair RMx 850W Gold",
         "Корпус": "Fractal Design Define Mini XL",
     },
-    "Игровая сборка 10": {
-        "Процессор": "AMD Ryzen 7 7700",
+    "Игровая сборка 8": {
+        "Процессор": "AMD Ryzen 7 7800X",
         "Охлаждение": "Noctua NH-U12A",
         "Материнская плата": "MSI MAG B660M Mortar WiFi",
         "Оперативная память": "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
         "SSD": "WD Black SN850X 2TB NVMe M.2",
         "Жесткий диск": "Western Digital Blue 6TB SATA III",
-        "Видеокарта": "AMD Radeon RX 7800 XT",
-        "Блок питания": "EVGA SuperNOVA 750 G3 750W",
+        "Видеокарта": "AMD Radeon RX 7900 XT",
+        "Блок питания": "EVGA SuperNOVA 850 G3 850W",
         "Корпус": "NZXT H510 Elite",
     },
-
-    # Офисные сборки
+    "Игровая сборка 9": {
+        "Процессор": "Intel Core i9-13900KF",
+        "Охлаждение": "DeepCool Gammaxx 400",
+        "Материнская плата": "ASRock X670E Taichi",
+        "Оперативная память": "Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz",
+        "SSD": "Kingston KC2500 2TB NVMe M.2",
+        "Жесткий диск": "Toshiba P300 4TB SATA III",
+        "Видеокарта": "NVIDIA GeForce RTX 4080",
+        "Блок питания": "Seasonic PRIME TX 850W Gold",
+        "Корпус": "BitFenix Aegis Mini",
+    },
+    "Игровая сборка 10": {
+        "Процессор": "AMD Ryzen 9 7900X",
+        "Охлаждение": "Arctic Freezer 34 eSports",
+        "Материнская плата": "Gigabyte Z790 AORUS Elite AX",
+        "Оперативная память": "Crucial Ballistix 32GB (2x16GB) DDR5 6400MHz",
+        "SSD": "Sabrent Rocket 4 Plus 2TB NVMe M.2",
+        "Жесткий диск": "Hitachi GST Ultrastar 6TB SATA III",
+        "Видеокарта": "AMD Radeon RX 7800 XT",
+        "Блок питания": "Thermaltake Toughpower GF1 850W Gold",
+        "Корпус": "Phanteks Enthoo Pro Mini",
+    },
     "Офисная сборка 1": {
         "Процессор": "Intel Core i5-13400",
         "Охлаждение": "Cooler Master Hyper 212 EVO",
@@ -142,73 +188,51 @@ build_details = {
         "Корпус": "NZXT H440",
     },
     "Офисная сборка 3": {
-        "Процессор": "Intel Core i7-13700",
-        "Охлаждение": "DeepCool Gammaxx 400",
-        "Материнская плата": "Gigabyte B660M DS3H",
-        "Оперативная память": "Kingston ValueRAM 16GB (2x8GB) DDR4 2666MHz",
-        "SSD": "Kingston A400 480GB SATA III",
-        "Жесткий диск": "Toshiba P300 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce MX550 2GB",
-        "Блок питания": "Seasonic Prime TX 550W Gold",
-        "Корпус": "BitFenix Aurora",
-    },
-    "Офисная сборка 4": {
-        "Процессор": "AMD Ryzen 7 7700",
-        "Охлаждение": "Arctic Freezer 34 eSports",
-        "Материнская плата": "ASRock B660M Pro RS",
-        "Оперативная память": "Crucial Ballistix 16GB (2x8GB) DDR5 5200MHz",
-        "SSD": "Sabrent Rocket 4 500GB NVMe M.2",
-        "Жесткий диск": "Hitachi GST Ultrastar 4TB SATA III",
-        "Видеокарта": "AMD Radeon RX 640 2GB",
-        "Блок питания": "Thermaltake Toughpower GF1 550W Gold",
-        "Корпус": "Phanteks Eclipse P300",
-    },
-    "Офисная сборка 5": {
-        "Процессор": "Intel Core i5-13400",
+        "Процессор": "Intel Core i5-13600K",
         "Охлаждение": "Cooler Master Hyper 212 RGB",
         "Материнская плата": "ASUS ROG Strix B660-A WIFI",
-        "Оперативная память": "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
-        "SSD": "Samsung 870 QVO 500GB SATA III",
-        "Жесткий диск": "Seagate Barracuda 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce GT 730 2GB",
-        "Блок питания": "Corsair RMx 550W Gold",
-        "Корпус": "Fractal Design Node 304",
+        "Оперативная память": "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
+        "SSD": "Samsung 980 Pro 1TB NVMe M.2",
+        "Жесткий диск": "Seagate BarraCuda 4TB SATA III",
+        "Видеокарта": "NVIDIA GeForce RTX 4070 Ti",
+        "Блок питания": "Corsair RMx 850W Gold",
+        "Корпус": "Fractal Design Define Mini XL",
+    },
+    "Офисная сборка 4": {
+        "Процессор": "AMD Ryzen 7 7800X",
+        "Охлаждение": "Noctua NH-U12A",
+        "Материнская плата": "MSI MAG B660M Mortar WiFi",
+        "Оперативная память": "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
+        "SSD": "WD Black SN850X 2TB NVMe M.2",
+        "Жесткий диск": "Western Digital Blue 6TB SATA III",
+        "Видеокарта": "AMD Radeon RX 7900 XT",
+        "Блок питания": "EVGA SuperNOVA 850 G3 850W",
+        "Корпус": "NZXT H510 Elite",
+    },
+    "Офисная сборка 5": {
+        "Процессор": "Intel Core i9-13900KF",
+        "Охлаждение": "DeepCool Gammaxx 400",
+        "Материнская плата": "ASRock X670E Taichi",
+        "Оперативная память": "Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz",
+        "SSD": "Kingston KC2500 2TB NVMe M.2",
+        "Жесткий диск": "Toshiba P300 4TB SATA III",
+        "Видеокарта": "NVIDIA GeForce RTX 4080",
+        "Блок питания": "Seasonic PRIME TX 850W Gold",
+        "Корпус": "BitFenix Aegis Mini",
     },
     "Офисная сборка 6": {
-        "Процессор": "AMD Ryzen 5 7600",
-        "Охлаждение": "Noctua NH-L9A",
-        "Материнская плата": "MSI MAG B660M Mortar WiFi",
-        "Оперативная память": "G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz",
-        "SSD": "WD Blue SN550 500GB NVMe M.2",
-        "Жесткий диск": "Western Digital Blue 4TB SATA III",
-        "Видеокарта": "AMD Radeon R5 230 2GB",
-        "Блок питания": "EVGA SuperNOVA 550 G3 550W",
-        "Корпус": "NZXT H440",
+        "Процессор": "AMD Ryzen 9 7900X",
+        "Охлаждение": "Arctic Freezer 34 eSports",
+        "Материнская плата": "Gigabyte Z790 AORUS Elite AX",
+        "Оперативная память": "Crucial Ballistix 32GB (2x16GB) DDR5 6400MHz",
+        "SSD": "Sabrent Rocket 4 Plus 2TB NVMe M.2",
+        "Жесткий диск": "Hitachi GST Ultrastar 6TB SATA III",
+        "Видеокарта": "AMD Radeon RX 7800 XT",
+        "Блок питания": "Thermaltake Toughpower GF1 850W Gold",
+        "Корпус": "Phanteks Enthoo Pro Mini",
     },
     "Офисная сборка 7": {
         "Процессор": "Intel Core i7-13700",
-        "Охлаждение": "DeepCool Gammaxx 400",
-        "Материнская плата": "Gigabyte B660M DS3H",
-        "Оперативная память": "Kingston ValueRAM 16GB (2x8GB) DDR4 2666MHz",
-        "SSD": "Kingston A400 480GB SATA III",
-        "Жесткий диск": "Toshiba P300 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce MX550 2GB",
-        "Блок питания": "Seasonic Prime TX 550W Gold",
-        "Корпус": "BitFenix Aurora",
-    },
-    "Офисная сборка 8": {
-        "Процессор": "AMD Ryzen 7 7700",
-        "Охлаждение": "Arctic Freezer 34 eSports",
-        "Материнская плата": "ASRock B660M Pro RS",
-        "Оперативная память": "Crucial Ballistix 16GB (2x8GB) DDR5 5200MHz",
-        "SSD": "Sabrent Rocket 4 500GB NVMe M.2",
-        "Жесткий диск": "Hitachi GST Ultrastar 4TB SATA III",
-        "Видеокарта": "AMD Radeon RX 640 2GB",
-        "Блок питания": "Thermaltake Toughpower GF1 550W Gold",
-        "Корпус": "Phanteks Eclipse P300",
-    },
-    "Офисная сборка 9": {
-        "Процессор": "Intel Core i5-13400",
         "Охлаждение": "Cooler Master Hyper 212 EVO",
         "Материнская плата": "ASUS TUF B660M-PLUS WIFI",
         "Оперативная память": "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
@@ -218,7 +242,7 @@ build_details = {
         "Блок питания": "Corsair RMx 550W Gold",
         "Корпус": "Fractal Design Node 304",
     },
-    "Офисная сборка 10": {
+    "Офисная сборка 8": {
         "Процессор": "AMD Ryzen 5 7600",
         "Охлаждение": "Noctua NH-L9A",
         "Материнская плата": "MSI B660M PRO WIFI",
@@ -229,6 +253,122 @@ build_details = {
         "Блок питания": "EVGA SuperNOVA 550 G3 550W",
         "Корпус": "NZXT H440",
     },
+    "Офисная сборка 9": {
+        "Процессор": "Intel Core i5-13400",
+        "Охлаждение": "Cooler Master Hyper 212 RGB",
+        "Материнская плата": "ASUS ROG Strix B660-A WIFI",
+        "Оперативная память": "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
+        "SSD": "Samsung 980 Pro 1TB NVMe M.2",
+        "Жесткий диск": "Seagate BarraCuda 4TB SATA III",
+        "Видеокарта": "NVIDIA GeForce RTX 4070 Ti",
+        "Блок питания": "Corsair RMx 850W Gold",
+        "Корпус": "Fractal Design Define Mini XL",
+    },
+    "Офисная сборка 10": {
+        "Процессор": "AMD Ryzen 7 7800X",
+        "Охлаждение": "Noctua NH-U12A",
+        "Материнская плата": "MSI MAG B660M Mortar WiFi",
+        "Оперативная память": "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
+        "SSD": "WD Black SN850X 2TB NVMe M.2",
+        "Жесткий диск": "Western Digital Blue 6TB SATA III",
+        "Видеокарта": "AMD Radeon RX 7900 XT",
+        "Блок питания": "EVGA SuperNOVA 850 G3 850W",
+        "Корпус": "NZXT H510 Elite",
+    },
+}
+
+# Список всех возможных вариантов комплектующих
+component_options = {
+    "Процессор": [
+        "Intel Core i5-13600K",
+        "AMD Ryzen 7 7800X",
+        "Intel Core i9-13900KF",
+        "AMD Ryzen 9 7900X",
+        "Intel Core i5-13400",
+        "AMD Ryzen 5 7600",
+        "Intel Core i7-13700",
+        "AMD Ryzen 7 7700",
+    ],
+    "Охлаждение": [
+        "Cooler Master Hyper 212 RGB",
+        "Noctua NH-U12A",
+        "Corsair Hydro X Series H115i RGB Platinum",
+        "NZXT Kraken X73",
+        "Cooler Master Hyper 212 EVO",
+        "Noctua NH-L9A",
+        "DeepCool Gammaxx 400",
+        "Arctic Freezer 34 eSports",
+    ],
+    "Материнская плата": [
+        "ASUS ROG Strix B660-A WIFI",
+        "MSI MAG B660M Mortar WiFi",
+        "Gigabyte Z790 AORUS Elite AX",
+        "ASRock X670E Taichi",
+        "ASUS TUF B660M-PLUS WIFI",
+        "MSI B660M PRO WIFI",
+        "Gigabyte B660M DS3H",
+        "ASRock B660M Pro RS",
+    ],
+    "Оперативная память": [
+        "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
+        "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
+        "Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz",
+        "Crucial Ballistix 32GB (2x16GB) DDR5 6400MHz",
+        "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
+        "G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz",
+        "Kingston ValueRAM 16GB (2x8GB) DDR4 2666MHz",
+        "Crucial Ballistix 16GB (2x8GB) DDR5 5200MHz",
+    ],
+    "SSD": [
+        "Samsung 980 Pro 1TB NVMe M.2",
+        "WD Black SN850X 2TB NVMe M.2",
+        "Kingston KC2500 2TB NVMe M.2",
+        "Sabrent Rocket 4 Plus 2TB NVMe M.2",
+        "Samsung 870 QVO 500GB SATA III",
+        "WD Blue SN550 500GB NVMe M.2",
+        "Kingston A400 480GB SATA III",
+        "Sabrent Rocket 4 500GB NVMe M.2",
+    ],
+    "Жесткий диск": [
+        "Seagate BarraCuda 4TB SATA III",
+        "Western Digital Blue 6TB SATA III",
+        "Toshiba P300 4TB SATA III",
+        "Hitachi GST Ultrastar 6TB SATA III",
+        "Seagate Barracuda 2TB SATA III",
+        "Western Digital Blue 4TB SATA III",
+        "Toshiba P300 2TB SATA III",
+        "Hitachi GST Ultrastar 4TB SATA III",
+    ],
+    "Видеокарта": [
+        "NVIDIA GeForce RTX 4070 Ti",
+        "AMD Radeon RX 7900 XT",
+        "NVIDIA GeForce RTX 4080",
+        "AMD Radeon RX 7800 XT",
+        "NVIDIA GeForce GT 730 2GB",
+        "AMD Radeon R5 230 2GB",
+        "NVIDIA GeForce MX550 2GB",
+        "AMD Radeon RX 640 2GB",
+    ],
+    "Блок питания": [
+        "Corsair RMx 850W Gold",
+        "EVGA SuperNOVA 850 G3 850W",
+        "Seasonic PRIME TX 850W Gold",
+        "Thermaltake Toughpower GF1 850W Gold",
+        "Corsair RMx 550W Gold",
+        "EVGA SuperNOVA 550 G3 550W",
+        "Seasonic Prime TX 550W Gold",
+        "Thermaltake Toughpower GF1 550W Gold",
+    ],
+    "Корпус": [
+        "Fractal Design Define Mini XL",
+        "NZXT H510 Elite",
+        "BitFenix Aegis Mini",
+        "Phanteks Enthoo Pro Mini",
+        "Fractal Design Node 304",
+        "NZXT H440",
+        "BitFenix Aurora",
+        "Phanteks Eclipse P300",
+    ],
 }
 
 def main(page: ft.Page):
@@ -241,10 +381,8 @@ def main(page: ft.Page):
     page.window_height = 600
     page.bgcolor = "#E0E0E6"
 
-    # Row для кнопок сборок
     builds_row = ft.Row(scroll="auto", spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
-    # Заполнение начальных кнопок
     def create_buttons(build_list):
         return [
             ft.ElevatedButton(
@@ -262,7 +400,6 @@ def main(page: ft.Page):
 
     builds_row.controls = create_buttons(all_builds)
 
-    # Контейнер для сборок
     builds_container = ft.Container(
         content=builds_row,
         padding=10,
@@ -270,20 +407,16 @@ def main(page: ft.Page):
         border_radius=10,
     )
 
-    # Функция фильтрации
     def set_filter(category):
         builds_row.controls.clear()
-
         if category == "Все":
             builds_row.controls.extend(create_buttons(all_builds))
         elif category == "Игровые":
             builds_row.controls.extend(create_buttons(gaming_builds))
         elif category == "Офисные":
             builds_row.controls.extend(create_buttons(office_builds))
-
         page.update()
 
-    # Кнопки фильтрации
     filter_controls = ft.Row(
         [
             ft.OutlinedButton("Все", on_click=lambda _: set_filter("Все")),
@@ -293,13 +426,11 @@ def main(page: ft.Page):
         spacing=10,
     )
 
-    # Основной контейнер страницы
     main_container = ft.Container(
         content=ft.Column(
             [
                 ft.Row([ft.Text("Конфигуратор ПК", size=20, weight=ft.FontWeight.BOLD)]),
                 ft.Divider(height=1, color="black"),
-
                 ft.Row(
                     [
                         ft.Text("Популярные сборки", size=16),
@@ -314,10 +445,8 @@ def main(page: ft.Page):
                     ],
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                 ),
-
                 filter_controls,
                 builds_container,
-
                 ft.Container(
                     content=ft.Column(
                         [
@@ -337,7 +466,6 @@ def main(page: ft.Page):
                     border=ft.border.all(1, "lightgray"),
                     border_radius=10,
                 ),
-
                 ft.Row(
                     [
                         ft.ElevatedButton("Отзывы о сервисе"),
@@ -354,61 +482,79 @@ def main(page: ft.Page):
         bgcolor="#F0F0F0",
     )
 
-    # --- Страница деталей сборки ---
-    def build_details_page(page: ft.Page, build_name: str):
-        # Получаем детали сборки из словаря
-        details = build_details.get(build_name, {})
+    def create_table_row(title, description, price, component_type, update_callback):
+        menu_items = [
+            ft.PopupMenuItem(text=item, on_click=lambda e, item=item: update_callback(title, item))
+            for item in component_options.get(component_type, [])
+        ]
 
-        # Создаем функцию для создания строки таблицы
-        def create_table_row(title, description, price):
-            return ft.Row(
-                [
-                    ft.Container(
-                        content=ft.Text(title, size=14, weight=ft.FontWeight.BOLD),
-                        alignment=ft.alignment.center_left,
-                        padding=ft.padding.only(left=10),
-                        width=150,  # Фиксированная ширина левой колонки
-                        height=50,  # Фиксированная высота строки
-                        bgcolor="#FFFFFF",
-                        border_radius=5,
-                    ),
-                    ft.Container(
-                        content=ft.Column(
-                            [
-                                ft.Text(description, size=12),
-                                ft.Text(f"{price} рублей", size=12),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        alignment=ft.alignment.center,
-                        padding=ft.padding.only(left=10),
-                        width=300,  # Фиксированная ширина правой колонки
-                        height=50,  # Фиксированная высота строки
-                        bgcolor="#FFFFFF",
-                        border_radius=5,
-                    ),
-                ],
-                spacing=10,
-                height=50,  # Высота строки
-            )
-
-        # Создаем таблицу характеристик
-        table = ft.Column(
-            [
-                create_table_row("Процессор", details.get("Процессор", "..."), "..."),
-                create_table_row("Охлаждение", details.get("Охлаждение", "..."), "..."),
-                create_table_row("Материнская плата", details.get("Материнская плата", "..."), "..."),
-                create_table_row("Оперативная память", details.get("Оперативная память", "..."), "..."),
-                create_table_row("SSD", details.get("SSD", "..."), "..."),
-                create_table_row("Жесткий диск", details.get("Жесткий диск", "..."), "..."),
-                create_table_row("Видеокарта", details.get("Видеокарта", "..."), "..."),
-                create_table_row("Блок питания", details.get("Блок питания", "..."), "..."),
-                create_table_row("Корпус", details.get("Корпус", "..."), "..."),
-            ],
-            spacing=10,
+        popup_menu = ft.PopupMenuButton(
+            icon=ft.icons.ARROW_FORWARD_IOS_ROUNDED,
+            tooltip="Изменить комплектующую",
+            items=menu_items,
+            icon_size=20,
+            bgcolor="#FFFFFF"
         )
 
-        # Правая часть - итоговая стоимость и кнопка сохранения
+        return ft.Row(
+            [
+                ft.Container(
+                    content=ft.Text(title, size=14, weight=ft.FontWeight.BOLD),
+                    alignment=ft.alignment.center_left,
+                    padding=ft.padding.only(left=10),
+                    width=150,
+                    height=50,
+                    bgcolor="#FFFFFF",
+                    border_radius=5,
+                ),
+                ft.Container(
+                    content=ft.Column(
+                        [
+                            ft.Text(description, size=12),
+                            ft.Text(f"{price} рублей", size=12),
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    ),
+                    alignment=ft.alignment.center,
+                    padding=ft.padding.only(left=10),
+                    width=300,
+                    height=50,
+                    bgcolor="#FFFFFF",
+                    border_radius=5,
+                ),
+                ft.Container(
+                    content=popup_menu,
+                    alignment=ft.alignment.center_right,
+                    padding=ft.padding.only(right=10),
+                    width=50,
+                    height=50,
+                    bgcolor="#FFFFFF",
+                    border_radius=5,
+                ),
+            ],
+            spacing=10,
+            height=50,
+        )
+
+    def build_details_page(page: ft.Page, build_name: str):
+        details = build_details.get(build_name, {})
+
+        def update_component(component_title, new_value):
+            details[component_title] = new_value
+            page.update()
+
+        table = ft.Column([
+            create_table_row("Процессор", details.get("Процессор", "..."), "...", "Процессор", update_component),
+            create_table_row("Охлаждение", details.get("Охлаждение", "..."), "...", "Охлаждение", update_component),
+            create_table_row("Материнская плата", details.get("Материнская плата", "..."), "...", "Материнская плата", update_component),
+            create_table_row("Оперативная память", details.get("Оперативная память", "..."), "...", "Оперативная память", update_component),
+            create_table_row("SSD", details.get("SSD", "..."), "...", "SSD", update_component),
+            create_table_row("Жесткий диск", details.get("Жесткий диск", "..."), "...", "Жесткий диск", update_component),
+            create_table_row("Видеокарта", details.get("Видеокарта", "..."), "...", "Видеокарта", update_component),
+            create_table_row("Блок питания", details.get("Блок питания", "..."), "...", "Блок питания", update_component),
+            create_table_row("Корпус", details.get("Корпус", "..."), "...", "Корпус", update_component),
+        ], spacing=10)
+
         right_section = ft.Column(
             [
                 ft.Container(
@@ -421,28 +567,11 @@ def main(page: ft.Page):
                 ),
                 ft.ElevatedButton("Сохранить сборку", width=300, height=50),
             ],
-            alignment=ft.MainAxisAlignment.CENTER,  # Вертикальное выравнивание
+            alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=20,
         )
 
-        # Общий контейнер
-        details_content = ft.Container(
-            content=ft.Row(
-                [
-                    table,  # Левая часть с таблицей
-                    right_section,  # Правая часть с итоговой стоимостью и кнопкой
-                ],
-                spacing=20,
-                alignment=ft.MainAxisAlignment.CENTER,  # Горизонтальное выравнивание
-                vertical_alignment=ft.CrossAxisAlignment.CENTER,  # Вертикальное выравнивание
-            ),
-            padding=20,
-            border_radius=10,
-            bgcolor="#F0F0F0",
-        )
-
-        # Назад
         back_button = ft.ElevatedButton(
             "Назад",
             on_click=lambda _: page.go("/"),
@@ -450,7 +579,21 @@ def main(page: ft.Page):
             height=40,
         )
 
-        # Главный контейнер страницы
+        details_content = ft.Container(
+            content=ft.Row(
+                [
+                    table,
+                    right_section,
+                ],
+                spacing=20,
+                alignment=ft.MainAxisAlignment.CENTER,
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=20,
+            border_radius=10,
+            bgcolor="#F0F0F0",
+        )
+
         main_content = ft.Container(
             content=ft.Column(
                 [
@@ -473,7 +616,6 @@ def main(page: ft.Page):
 
         return ft.View("/details", controls=[main_content])
 
-    # --- Навигация ---
     def route_change(route):
         if page.route == "/":
             page.views.clear()
