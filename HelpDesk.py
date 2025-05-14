@@ -1,4 +1,17 @@
 import flet as ft
+import os
+import subprocess
+import sys
+
+def open_help_file(e):
+    help_file = "usermanual.chm"
+    try:
+        if os.path.exists(help_file):
+            subprocess.Popen(["hh.exe", help_file], shell=True)
+        else:
+            print(f"Файл справки {help_file} не найден!")
+    except Exception as ex:
+        print(f"Ошибка при открытии файла справки: {ex}")
 
 # Генерация списка сборок
 gaming_builds = [f"Игровая сборка {i}" for i in range(1, 11)]
@@ -384,6 +397,7 @@ def main(page: ft.Page):
             ft.Row([
                 ft.Text("Популярные сборки", size=16),
                 ft.Row([
+                    ft.ElevatedButton("Помощь", on_click = open_help_file),
                     ft.ElevatedButton("Создать сборку", on_click=lambda _: page.go("/create")),
                     ft.ElevatedButton("Сравнение комплектаций"),
                     ft.ElevatedButton("Сохраненные сборки"),
@@ -497,9 +511,10 @@ def main(page: ft.Page):
         )
 
         help_button = ft.ElevatedButton(
-            "помощь",
+            "Помощь",
             width=100,
             height=40,
+            on_click = open_help_file
         )
 
         details_content = ft.Container(
@@ -580,9 +595,10 @@ def main(page: ft.Page):
         )
 
         help_button = ft.ElevatedButton(
-            "помощь",
+            "Помощь",
             width=100,
             height=40,
+            on_click = open_help_file
         )
 
         # Перемещаем кнопки "Назад" и "Помощь" в одну строку справа
