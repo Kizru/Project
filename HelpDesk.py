@@ -337,6 +337,29 @@ component_options = {
 }
 
 def main(page: ft.Page):
+    def open_helpdesk(e=None):
+        if page.route == "/":
+            help_file = "main_help.chm"
+        elif page.route == "/create":
+            help_file = "create_help.chm"
+        elif page.route.startswith("/details/"):
+            help_file = "details_help.chm"
+
+        full_path = os.path.abspath(help_file)
+
+        if not os.path.exists(full_path):
+            print(f"Файл {full_path} не найден!")
+            return
+
+        try:
+            subprocess.Popen(["hh.exe", full_path], shell=False)
+        except Exception as ex:
+            print(f"Ошибка при открытии файла справки: {ex}")
+
+    def on_keyboard(e: ft.KeyboardEvent):
+        if e.key == "F1":
+            open_helpdesk()
+
     page.title = "Конфигуратор ПК"
     page.vertical_alignment = ft.MainAxisAlignment.START
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
@@ -345,6 +368,7 @@ def main(page: ft.Page):
     page.window_width = 800
     page.window_height = 600
     page.bgcolor = "#E0E0E6"
+    page.on_keyboard_event = on_keyboard
 
     builds_row = ft.Row(scroll="auto", spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
