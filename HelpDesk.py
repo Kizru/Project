@@ -397,7 +397,7 @@ def main(page: ft.Page):
             ft.Row([
                 ft.Text("Популярные сборки", size=16),
                 ft.Row([
-                    ft.ElevatedButton("Помощь", on_click = open_help_file),
+                    ft.ElevatedButton("Помощь", on_click=open_help_file),
                     ft.ElevatedButton("Создать сборку", on_click=lambda _: page.go("/create")),
                     ft.ElevatedButton("Сравнение комплектаций"),
                     ft.ElevatedButton("Сохраненные сборки"),
@@ -427,9 +427,12 @@ def main(page: ft.Page):
         bgcolor="#F0F0F0",
     )
 
-    def create_table_row(title, description, price, component_type, update_callback):
+    # Обновляемая строка таблицы с кнопкой выбора
+    def create_table_row(title, description, component_type, update_callback):
+        # Текстовое поле, которое будет обновляться
+        label = ft.Text(description or "...", size=12)
         menu_items = [
-            ft.PopupMenuItem(text=item, on_click=lambda e, item=item: update_callback(title, item))
+            ft.PopupMenuItem(text=item, on_click=lambda e, item=item: update_callback(title, item, label))
             for item in component_options.get(component_type, [])
         ]
         popup_menu = ft.PopupMenuButton(
@@ -450,10 +453,7 @@ def main(page: ft.Page):
                 border_radius=5,
             ),
             ft.Container(
-                content=ft.Column([
-                    ft.Text(description, size=12),
-                    ft.Text(f"{price} рублей", size=12),
-                ], alignment=ft.MainAxisAlignment.CENTER),
+                content=label,
                 alignment=ft.alignment.center,
                 padding=ft.padding.only(left=10),
                 width=300,
@@ -475,20 +475,21 @@ def main(page: ft.Page):
     def build_details_page(page: ft.Page, build_name: str):
         details = build_details.get(build_name, {})
 
-        def update_component(component_title, new_value):
+        def update_component(component_title, new_value, label):
             details[component_title] = new_value
+            label.value = new_value
             page.update()
 
         table = ft.Column([
-            create_table_row("Процессор", details.get("Процессор", "..."), "...", "Процессор", update_component),
-            create_table_row("Охлаждение", details.get("Охлаждение", "..."), "...", "Охлаждение", update_component),
-            create_table_row("Материнская плата", details.get("Материнская плата", "..."), "...", "Материнская плата", update_component),
-            create_table_row("Оперативная память", details.get("Оперативная память", "..."), "...", "Оперативная память", update_component),
-            create_table_row("SSD", details.get("SSD", "..."), "...", "SSD", update_component),
-            create_table_row("Жесткий диск", details.get("Жесткий диск", "..."), "...", "Жесткий диск", update_component),
-            create_table_row("Видеокарта", details.get("Видеокарта", "..."), "...", "Видеокарта", update_component),
-            create_table_row("Блок питания", details.get("Блок питания", "..."), "...", "Блок питания", update_component),
-            create_table_row("Корпус", details.get("Корпус", "..."), "...", "Корпус", update_component),
+            create_table_row("Процессор", details.get("Процессор", "..."), "Процессор", update_component),
+            create_table_row("Охлаждение", details.get("Охлаждение", "..."), "Охлаждение", update_component),
+            create_table_row("Материнская плата", details.get("Материнская плата", "..."), "Материнская плата", update_component),
+            create_table_row("Оперативная память", details.get("Оперативная память", "..."), "Оперативная память", update_component),
+            create_table_row("SSD", details.get("SSD", "..."), "SSD", update_component),
+            create_table_row("Жесткий диск", details.get("Жесткий диск", "..."), "Жесткий диск", update_component),
+            create_table_row("Видеокарта", details.get("Видеокарта", "..."), "Видеокарта", update_component),
+            create_table_row("Блок питания", details.get("Блок питания", "..."), "Блок питания", update_component),
+            create_table_row("Корпус", details.get("Корпус", "..."), "Корпус", update_component),
         ], spacing=10)
 
         right_section = ft.Column([
@@ -503,25 +504,11 @@ def main(page: ft.Page):
             ft.ElevatedButton("Сохранить сборку", width=300, height=50),
         ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
 
-        back_button = ft.ElevatedButton(
-            "Назад",
-            on_click=lambda _: page.go("/"),
-            width=100,
-            height=40,
-        )
-
-        help_button = ft.ElevatedButton(
-            "Помощь",
-            width=100,
-            height=40,
-            on_click = open_help_file
-        )
+        back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
+        help_button = ft.ElevatedButton("Помощь", width=100, height=40, on_click=open_help_file)
 
         details_content = ft.Container(
-            content=ft.Row([
-                table,
-                right_section,
-            ], spacing=20, alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            content=ft.Row([table, right_section], spacing=20, alignment=ft.MainAxisAlignment.CENTER),
             padding=20,
             border_radius=10,
             bgcolor="#F0F0F0",
@@ -531,10 +518,7 @@ def main(page: ft.Page):
             content=ft.Column([
                 ft.Row([
                     ft.Text(f"Детали сборки: {build_name}", size=20, weight=ft.FontWeight.BOLD),
-                    ft.Row([
-                        back_button,
-                        help_button,
-                    ], spacing=10),  # Переместили кнопки назад и помощь в одну строку
+                    ft.Row([back_button, help_button], spacing=10),
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Divider(height=1, color="black"),
                 details_content,
@@ -559,20 +543,21 @@ def main(page: ft.Page):
             "Корпус": "",
         }
 
-        def update_component(component_title, new_value):
+        def update_component(component_title, new_value, label):
             current_build[component_title] = new_value
+            label.value = new_value
             page.update()
 
         table = ft.Column([
-            create_table_row("Процессор", current_build["Процессор"], "...", "Процессор", update_component),
-            create_table_row("Охлаждение", current_build["Охлаждение"], "...", "Охлаждение", update_component),
-            create_table_row("Материнская плата", current_build["Материнская плата"], "...", "Материнская плата", update_component),
-            create_table_row("Оперативная память", current_build["Оперативная память"], "...", "Оперативная память", update_component),
-            create_table_row("SSD", current_build["SSD"], "...", "SSD", update_component),
-            create_table_row("Жесткий диск", current_build["Жесткий диск"], "...", "Жесткий диск", update_component),
-            create_table_row("Видеокарта", current_build["Видеокарта"], "...", "Видеокарта", update_component),
-            create_table_row("Блок питания", current_build["Блок питания"], "...", "Блок питания", update_component),
-            create_table_row("Корпус", current_build["Корпус"], "...", "Корпус", update_component),
+            create_table_row("Процессор", current_build["Процессор"], "Процессор", update_component),
+            create_table_row("Охлаждение", current_build["Охлаждение"], "Охлаждение", update_component),
+            create_table_row("Материнская плата", current_build["Материнская плата"], "Материнская плата", update_component),
+            create_table_row("Оперативная память", current_build["Оперативная память"], "Оперативная память", update_component),
+            create_table_row("SSD", current_build["SSD"], "SSD", update_component),
+            create_table_row("Жесткий диск", current_build["Жесткий диск"], "Жесткий диск", update_component),
+            create_table_row("Видеокарта", current_build["Видеокарта"], "Видеокарта", update_component),
+            create_table_row("Блок питания", current_build["Блок питания"], "Блок питания", update_component),
+            create_table_row("Корпус", current_build["Корпус"], "Корпус", update_component),
         ], spacing=10)
 
         right_section = ft.Column([
@@ -587,34 +572,16 @@ def main(page: ft.Page):
             ft.ElevatedButton("Сохранить сборку", width=300, height=50),
         ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
 
-        back_button = ft.ElevatedButton(
-            "Назад",
-            on_click=lambda _: page.go("/"),
-            width=100,
-            height=40,
-        )
+        back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
+        help_button = ft.ElevatedButton("Помощь", width=100, height=40, on_click=open_help_file)
 
-        help_button = ft.ElevatedButton(
-            "Помощь",
-            width=100,
-            height=40,
-            on_click = open_help_file
-        )
-
-        # Перемещаем кнопки "Назад" и "Помощь" в одну строку справа
         top_row = ft.Row([
             ft.Text("Создание сборки", size=20, weight=ft.FontWeight.BOLD),
-            ft.Row([
-                back_button,
-                help_button,
-            ], spacing=10),
+            ft.Row([back_button, help_button], spacing=10),
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
         details_content = ft.Container(
-            content=ft.Row([
-                table,
-                right_section,
-            ], spacing=20, alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+            content=ft.Row([table, right_section], spacing=20, alignment=ft.MainAxisAlignment.CENTER),
             padding=20,
             border_radius=10,
             bgcolor="#F0F0F0",
@@ -622,7 +589,7 @@ def main(page: ft.Page):
 
         main_content = ft.Container(
             content=ft.Column([
-                top_row,  # Новый ряд для заголовка и кнопок
+                top_row,
                 ft.Divider(height=1, color="black"),
                 details_content,
             ], spacing=20),
@@ -652,6 +619,5 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go("/")
-
 
 ft.app(target=main)
