@@ -5,53 +5,6 @@ gaming_builds = [f"Игровая сборка {i}" for i in range(1, 11)]
 office_builds = [f"Офисная сборка {i}" for i in range(1, 11)]
 all_builds = gaming_builds + office_builds  # Все 20 сборок
 
-# Словарь с деталями сборок
-build_details = {
-    "Игровая сборка 1": {
-        "Процессор": "Intel Core i5-13600K",
-        "Охлаждение": "Cooler Master Hyper 212 RGB",
-        "Материнская плата": "ASUS ROG Strix B660-A WIFI",
-        "Оперативная память": "Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz",
-        "SSD": "Samsung 980 Pro 1TB NVMe M.2",
-        "Жесткий диск": "Seagate BarraCuda 4TB SATA III",
-        "Видеокарта": "NVIDIA GeForce RTX 4070 Ti",
-        "Блок питания": "Corsair RMx 850W Gold",
-        "Корпус": "Fractal Design Define Mini XL",
-    },
-    "Игровая сборка 2": {
-        "Процессор": "AMD Ryzen 7 7800X",
-        "Охлаждение": "Noctua NH-U12A",
-        "Материнская плата": "MSI MAG B660M Mortar WiFi",
-        "Оперативная память": "G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz",
-        "SSD": "WD Black SN850X 2TB NVMe M.2",
-        "Жесткий диск": "Western Digital Blue 6TB SATA III",
-        "Видеокарта": "AMD Radeon RX 7900 XT",
-        "Блок питания": "EVGA SuperNOVA 850 G3 850W",
-        "Корпус": "NZXT H510 Elite",
-    },
-    "Офисная сборка 1": {
-        "Процессор": "Intel Core i5-13400",
-        "Охлаждение": "Cooler Master Hyper 212 EVO",
-        "Материнская плата": "ASUS TUF B660M-PLUS WIFI",
-        "Оперативная память": "Corsair Value Select 16GB (2x8GB) DDR4 3200MHz",
-        "SSD": "Samsung 870 QVO 500GB SATA III",
-        "Жесткий диск": "Seagate Barracuda 2TB SATA III",
-        "Видеокарта": "NVIDIA GeForce GT 730 2GB",
-        "Блок питания": "Corsair RMx 550W Gold",
-        "Корпус": "Fractal Design Node 304",
-    },
-    "Офисная сборка 2": {
-        "Процессор": "AMD Ryzen 5 7600",
-        "Охлаждение": "Noctua NH-L9A",
-        "Материнская плата": "MSI B660M PRO WIFI",
-        "Оперативная память": "G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz",
-        "SSD": "WD Blue SN550 500GB NVMe M.2",
-        "Жесткий диск": "Western Digital Blue 4TB SATA III",
-        "Видеокарта": "AMD Radeon R5 230 2GB",
-        "Блок питания": "EVGA SuperNOVA 550 G3 550W",
-        "Корпус": "NZXT H440",
-    },
-}
 
 # Словарь с деталями сборок
 build_details = {
