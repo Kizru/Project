@@ -344,6 +344,10 @@ def main(page: ft.Page):
             help_file = "create_help.chm"
         elif page.route.startswith("/details/"):
             help_file = "details_help.chm"
+        elif page.route == "/compare":
+            help_file = "compare_help.chm"
+        elif page.route == "/support":
+            help_file = "support_help.chm"
 
         full_path = os.path.abspath(help_file)
 
@@ -416,15 +420,18 @@ def main(page: ft.Page):
 
     main_container = ft.Container(
         content=ft.Column([
-            ft.Row([ft.Text("Конфигуратор ПК", size=20, weight=ft.FontWeight.BOLD)]),
+            ft.Row([ft.Text("Конфигуратор ПК", size=20, weight=ft.FontWeight.BOLD), ft.IconButton(
+                icon=ft.icons.POWER_SETTINGS_NEW,
+                tooltip="Выйти из приложения",
+                on_click=lambda e: page.window.close()
+            )], alignment = ft.MainAxisAlignment.SPACE_BETWEEN),
             ft.Divider(height=1, color="black"),
             ft.Row([
                 ft.Text("Популярные сборки", size=16),
                 ft.Row([
                     ft.ElevatedButton("Помощь", on_click=open_help_file),
                     ft.ElevatedButton("Создать сборку", on_click=lambda _: page.go("/create")),
-                    ft.ElevatedButton("Сравнение комплектаций"),
-                    ft.ElevatedButton("Сохраненные сборки"),
+                    ft.ElevatedButton("Сравнение комплектующих", on_click=lambda _: page.go("/compare")),
                 ], spacing=10),
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             filter_controls,
@@ -443,7 +450,7 @@ def main(page: ft.Page):
             ),
             ft.Row([
                 ft.ElevatedButton("Отзывы о сервисе"),
-                ft.ElevatedButton("Служба поддержки"),
+                ft.ElevatedButton("Служба поддержки", on_click=lambda _: page.go("/support")),
             ], alignment=ft.MainAxisAlignment.END, spacing=10),
         ], spacing=20),
         padding=20,
@@ -552,7 +559,7 @@ def main(page: ft.Page):
             bgcolor="#F0F0F0",
         )
 
-        return ft.View("/details", controls=[main_content])
+        return ft.View(f"/details/{build_name}", controls=[main_content])
 
     def create_build_page(page: ft.Page):
         current_build = {
@@ -624,15 +631,281 @@ def main(page: ft.Page):
 
         return ft.View("/create", controls=[main_content])
 
+    def compare_components_page(page: ft.Page):
+        compare_component_options = {
+            "Процессор": ["AMD Ryzen 7 7800X3D", "Intel Core i9-13900K"],
+            "Охлаждение": ["Noctua NH-D15", "NZXT Kraken X73"],
+            "SSD": ["Samsung 990 Pro", "Samsung 980 Pro"]
+        }
+
+        # Создаем элементы управления до их использования
+        component1_dropdown = ft.Dropdown(width=200)
+        component2_dropdown = ft.Dropdown(width=200)
+        
+        def update_component_fields(e):
+            selected_type = component_type_dropdown.value
+            if selected_type:
+                components_row.controls[0].controls[0].value = f"{selected_type} 1"
+                components_row.controls[1].controls[0].value = f"{selected_type} 2"
+                
+                options = compare_component_options.get(selected_type, [])
+                component1_dropdown.options = [ft.dropdown.Option(opt) for opt in options]
+                component2_dropdown.options = [ft.dropdown.Option(opt) for opt in options]
+                
+                if options:
+                    component1_dropdown.value = options[0]
+                    component2_dropdown.value = options[1] if len(options) > 1 else options[0]
+                
+                page.update()
+        
+        header = ft.Row(
+            controls=[
+                ft.Text("Сравнение комплектующих", size=24, weight=ft.FontWeight.BOLD),
+                ft.IconButton(
+                    icon=ft.icons.ARROW_BACK,
+                    on_click=lambda _: page.go("/"),
+                    tooltip="Вернуться на главную"
+                )
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            width=page.width
+        )
+        
+        # Создаем выпадающий список для выбора типа компонента
+        component_type_dropdown = ft.Dropdown(
+            label="Выберите комплектующие для сравнения",
+            options=[
+                ft.dropdown.Option("Процессор"),
+                ft.dropdown.Option("Охлаждение"),
+                ft.dropdown.Option("SSD"),
+            ],
+            width=400,
+            on_change=update_component_fields
+        )
+        
+        # Центрируем выпадающий список
+        dropdown_container = ft.Container(
+            content=ft.Column(
+                [
+                    component_type_dropdown  # Используем уже созданный элемент
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            padding=ft.padding.only(bottom=20)
+        )
+        
+        components_row = ft.Row(
+            controls=[
+                ft.Column(
+                    controls=[
+                        ft.Text("Комплектующее 1", weight=ft.FontWeight.BOLD),
+                        component1_dropdown
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=10
+                ),
+                ft.Column(
+                    controls=[
+                        ft.Text("Комплектующее 2", weight=ft.FontWeight.BOLD),
+                        component2_dropdown
+                    ],
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=10
+                )
+            ],
+            spacing=50,
+            alignment=ft.MainAxisAlignment.CENTER
+        )
+        
+        # Центрируем кнопку сравнения
+        compare_button_container = ft.Container(
+            content=ft.ElevatedButton(
+                text="Сравнить",
+                width=200,
+                height=50
+            ),
+            alignment=ft.alignment.center,
+            padding=ft.padding.only(top=20)
+        )
+        
+        content = ft.Column(
+            controls=[
+                header,
+                dropdown_container,
+                components_row,
+                compare_button_container
+            ],
+            scroll=ft.ScrollMode.AUTO,
+            expand=True,
+            alignment=ft.MainAxisAlignment.START,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=20
+        )
+        
+        return ft.View("/compare", controls=[content], scroll=ft.ScrollMode.AUTO)
+
+    def support_page(page: ft.Page):
+        message_display = ft.Text("", color=ft.colors.RED, size=14)
+        
+        # Сначала создаем все элементы формы
+        name_field = ft.TextField(label="Ваше имя", width=400)
+        email_field = ft.TextField(label="Ваш email для связи", width=400)
+        issue_field = ft.TextField(label="Тема проблемы", width=400)
+        message_field = ft.TextField(
+            label="Опишите Вашу проблему", 
+            multiline=True, 
+            min_lines=3,
+            max_lines=5,
+            width=400
+        )
+        
+        def submit_form(e):
+            if not name_field.value:
+                message_display.value = "Вы заполнили не все поля!"
+                message_display.color = ft.colors.RED
+                page.update()
+                return
+            if not email_field.value:
+                message_display.value = "Вы заполнили не все поля!"
+                message_display.color = ft.colors.RED
+                page.update()
+                return
+            if not issue_field.value:
+                message_display.value = "Вы заполнили не все поля!"
+                message_display.color = ft.colors.RED
+                page.update()
+                return
+            if not message_field.value:
+                message_display.value = "Вы заполнили не все поля!"
+                message_display.color = ft.colors.RED
+                page.update()
+                return
+                
+            # Здесь должна быть реальная отправка формы
+            print(f"Отправлено: {name_field.value}, {email_field.value}")
+            
+            message_display.value = "Заявка успешно отправлена! Ожидайте ответ от техподдержки"
+            message_display.color = ft.colors.GREEN
+            
+            name_field.value = ""
+            email_field.value = ""
+            issue_field.value = ""
+            message_field.value = ""
+            page.update()
+        
+        # Создаем заголовок
+        header = ft.Row(
+            controls=[
+                ft.Text("Служба поддержки", size=24, weight=ft.FontWeight.BOLD),
+                ft.IconButton(
+                    icon=ft.icons.ARROW_BACK,
+                    tooltip="Вернуться на главную",
+                    on_click=lambda _: page.go("/")
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            width=page.width
+        )
+        
+        # Создаем основную структуру страницы
+        content = ft.Column(
+            scroll=ft.ScrollMode.AUTO,
+            expand=True,
+            spacing=20,
+            controls=[
+                header,  # Добавляем заголовок
+                ft.Text("Часто задаваемые вопросы", 
+                       size=20, 
+                       weight=ft.FontWeight.BOLD,
+                       text_align=ft.TextAlign.CENTER),
+                
+                ft.Column(
+                    controls=[
+                        ft.ExpansionTile(
+                            title=ft.Text("Как связаться с поддержкой?"),
+                            controls=[
+                                ft.ListTile(title=ft.Text("Используйте форму ниже или контактные данные в конце страницы."))
+                            ]
+                        ),
+                        ft.ExpansionTile(
+                            title=ft.Text("Какие часы работы у поддержки?"),
+                            controls=[
+                                ft.ListTile(title=ft.Text("Мы работаем 24/7."))
+                            ]
+                        ),
+                    ],
+                    spacing=10,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                ),
+                
+                ft.Divider(),
+                
+                ft.Text("Форма обращения в поддержку", 
+                       size=20, 
+                       weight=ft.FontWeight.BOLD,
+                       text_align=ft.TextAlign.CENTER),
+                
+                ft.Column(
+                    controls=[
+                        name_field,
+                        email_field,
+                        issue_field,
+                        message_field,
+                        message_display,
+                        ft.ElevatedButton(
+                            "Отправить", 
+                            on_click=submit_form,
+                            width=400
+                        )
+                    ],
+                    spacing=10,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                ),
+                
+                ft.Divider(),
+                
+                ft.Text("Контактная информация", 
+                       size=20, 
+                       weight=ft.FontWeight.BOLD,
+                       text_align=ft.TextAlign.CENTER),
+                
+                ft.Column(
+                    controls=[
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.PHONE),
+                            title=ft.Text("Телефон: +7 (123) 456-78-90")
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.EMAIL),
+                            title=ft.Text("Email: support@example.com")
+                        ),
+                    ],
+                    spacing=5,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
+                )
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER
+        )
+        
+        return ft.View(
+            "/support", 
+            controls=[content],
+            scroll=ft.ScrollMode.AUTO
+        )
+
     def route_change(route):
+        page.views.clear()
         if page.route == "/":
-            page.views.clear()
             page.views.append(ft.View("/", controls=[main_container]))
         elif page.route.startswith("/details/"):
             build_name = page.route.split("/")[-1]
             page.views.append(build_details_page(page, build_name))
         elif page.route == "/create":
             page.views.append(create_build_page(page))
+        elif page.route == "/compare":
+            page.views.append(compare_components_page(page))
+        elif page.route == "/support":
+            page.views.append(support_page(page))
         page.update()
 
     def view_pop(view):
