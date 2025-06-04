@@ -2,6 +2,9 @@ import flet as ft
 import os
 import subprocess
 import sys
+import datetime
+import tkinter as tk
+from tkinter import filedialog
 
 def open_help_file(e):
     help_file = "usermanual.chm"
@@ -565,7 +568,12 @@ def main(page: ft.Page):
                 bgcolor="#FFFFFF",
                 border_radius=5,
             ),
-            ft.ElevatedButton("Сохранить сборку", width=300, height=50),
+            ft.ElevatedButton(
+                "Сохранить сборку",
+                width=300,
+                height=50,
+                on_click=lambda e: save_build_to_file(build_name, details)
+            ),
         ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
 
         back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
@@ -646,7 +654,12 @@ def main(page: ft.Page):
                 bgcolor="#FFFFFF",
                 border_radius=5,
             ),
-            ft.ElevatedButton("Сохранить сборку", width=300, height=50),
+            ft.ElevatedButton(
+                "Сохранить сборку",
+                width=300,
+                height=50,
+                on_click=lambda e: save_build_to_file("Пользовательская_сборка", current_build)
+            ),
         ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
 
         back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
@@ -958,6 +971,38 @@ def main(page: ft.Page):
         page.views.pop()
         top_view = page.views[-1]
         page.go(top_view.route)
+
+    def save_build_to_file(build_name: str, build_data: dict):
+        try:
+            # Инициализируем скрытое окно Tkinter
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)  # <-- делаем окно поверх всех
+
+            # Открываем диалог "Сохранить как"
+            default_filename = f"{build_name.replace(' ', '_')}.txt"
+            file_path = filedialog.asksaveasfilename(
+                defaultextension=".txt",
+                filetypes=[("Text files", "*.txt")],
+                initialfile=default_filename,
+                title="Сохранить сборку как...",
+                parent=root  # <-- указываем родителя явно
+            )
+
+            root.destroy()  # Уничтожаем скрытое окно
+
+            if not file_path:
+                return  # Отменено пользователем
+
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(f"Название сборки: {build_name}\n\n")
+                for key, value in build_data.items():
+                    f.write(f"{key}: {value}\n")
+
+            print(f"Сборка успешно сохранена в файл: {file_path}")
+
+        except Exception as e:
+            print(f"Ошибка при сохранении сборки: {e}")
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
