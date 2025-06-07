@@ -19,6 +19,7 @@ def open_help_file(e):
 # Генерация списка сборок
 gaming_builds = [f"Игровая сборка {i}" for i in range(1, 11)]
 office_builds = [f"Офисная сборка {i}" for i in range(1, 11)]
+
 all_builds = gaming_builds + office_builds  # Все 20 сборок
 
 build_details = {
@@ -162,7 +163,7 @@ build_details = {
         "Оперативная память": ("G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz", 4000),
         "SSD": ("Sabrent Rocket 4 500GB NVMe M.2", 3500),
         "Жесткий диск": ("Toshiba P300 2TB SATA III", 3000),
-        "Видеокарта": ("Integrated Graphics", 0),
+        "Видеокарта": ("Integrated Graphics", 12000),
         "Блок питания": ("Thermaltake Toughpower GF1 550W Gold", 3800),
         "Корпус": ("BitFenix Aegis Mini", 2800),
     },
