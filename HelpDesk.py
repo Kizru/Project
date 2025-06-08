@@ -5,6 +5,12 @@ import sys
 import datetime
 import tkinter as tk
 from tkinter import filedialog
+from DataBase import ComponentDB, component_options
+import json
+import pyperclip
+
+db = ComponentDB()
+
 
 def open_help_file(e):
     help_file = "usermanual.chm"
@@ -246,100 +252,6 @@ build_details = {
     },
 }
 
-# Список всех возможных вариантов комплектующих с ценами
-component_options = {
-    "Процессор": [
-        ("Intel Core i5-13600K", 25000),
-        ("AMD Ryzen 7 7800X", 28000),
-        ("Intel Core i9-13900KF", 35000),
-        ("AMD Ryzen 9 7900X", 40000),
-        ("Intel Core i5-13400", 18000),
-        ("AMD Ryzen 5 7600", 15000),
-        ("Intel Core i7-13700", 22000),
-        ("AMD Ryzen 7 7700", 20000),
-    ],
-    "Охлаждение": [
-        ("Cooler Master Hyper 212 RGB", 1200),
-        ("Noctua NH-U12A", 2500),
-        ("Corsair Hydro X Series H115i RGB Platinum", 4000),
-        ("NZXT Kraken X73", 3000),
-        ("Cooler Master Hyper 212 EVO", 1000),
-        ("Noctua NH-L9A", 1500),
-        ("DeepCool Gammaxx 400", 2000),
-        ("Arctic Freezer 34 eSports", 2200),
-    ],
-    "Материнская плата": [
-        ("ASUS ROG Strix B660-A WIFI", 15000),
-        ("MSI MAG B660M Mortar WiFi", 12000),
-        ("Gigabyte Z790 AORUS Elite AX", 20000),
-        ("ASRock X670E Taichi", 25000),
-        ("ASUS TUF B660M-PLUS WIFI", 10000),
-        ("MSI B660M PRO WIFI", 8000),
-        ("Gigabyte B660M DS3H", 9000),
-        ("ASRock B660M Pro RS", 7000),
-    ],
-    "Оперативная память": [
-        ("Corsair Vengeance LPX 32GB (2x16GB) DDR4 3600MHz", 6000),
-        ("G.Skill Trident Z Neo 32GB (2x16GB) DDR5 6000MHz", 8000),
-        ("Kingston FURY Beast 32GB (2x16GB) DDR4 3200MHz", 5000),
-        ("Crucial Ballistix 32GB (2x16GB) DDR5 6400MHz", 7000),
-        ("Corsair Value Select 16GB (2x8GB) DDR4 3200MHz", 3000),
-        ("G.Skill Ripjaws S 16GB (2x8GB) DDR5 5600MHz", 4000),
-        ("Kingston ValueRAM 16GB (2x8GB) DDR4 2666MHz", 2000),
-        ("Crucial Ballistix 16GB (2x8GB) DDR5 5200MHz", 3500),
-    ],
-    "SSD": [
-        ("Samsung 980 Pro 1TB NVMe M.2", 10000),
-        ("WD Black SN850X 2TB NVMe M.2", 15000),
-        ("Kingston KC2500 2TB NVMe M.2", 12000),
-        ("Sabrent Rocket 4 Plus 2TB NVMe M.2", 13000),
-        ("Samsung 870 QVO 500GB SATA III", 3000),
-        ("WD Blue SN550 500GB NVMe M.2", 4000),
-        ("Kingston A400 480GB SATA III", 2000),
-        ("Sabrent Rocket 4 500GB NVMe M.2", 3500),
-    ],
-    "Жесткий диск": [
-        ("Seagate BarraCuda 4TB SATA III", 3500),
-        ("Western Digital Blue 6TB SATA III", 5000),
-        ("Toshiba P300 4TB SATA III", 4000),
-        ("Hitachi GST Ultrastar 6TB SATA III", 6000),
-        ("Seagate Barracuda 2TB SATA III", 2500),
-        ("Western Digital Blue 4TB SATA III", 4500),
-        ("Toshiba P300 2TB SATA III", 3000),
-        ("Hitachi GST Ultrastar 4TB SATA III", 5500),
-    ],
-    "Видеокарта": [
-        ("NVIDIA GeForce RTX 4070 Ti", 45000),
-        ("AMD Radeon RX 7900 XT", 50000),
-        ("NVIDIA GeForce RTX 4080", 60000),
-        ("AMD Radeon RX 7800 XT", 55000),
-        ("NVIDIA GeForce GT 730 2GB", 1500),
-        ("AMD Radeon R5 230 2GB", 2000),
-        ("NVIDIA GeForce MX550 2GB", 2500),
-        ("AMD Radeon RX 640 2GB", 3000),
-    ],
-    "Блок питания": [
-        ("Corsair RMx 850W Gold", 4000),
-        ("EVGA SuperNOVA 850 G3 850W", 5000),
-        ("Seasonic PRIME TX 850W Gold", 4500),
-        ("Thermaltake Toughpower GF1 850W Gold", 5500),
-        ("Corsair RMx 550W Gold", 3000),
-        ("EVGA SuperNOVA 550 G3 550W", 3500),
-        ("Seasonic Prime TX 550W Gold", 3200),
-        ("Thermaltake Toughpower GF1 550W Gold", 3800),
-    ],
-    "Корпус": [
-        ("Fractal Design Define Mini XL", 3000),
-        ("NZXT H510 Elite", 2500),
-        ("BitFenix Aegis Mini", 2800),
-        ("Phanteks Enthoo Pro Mini", 3500),
-        ("Fractal Design Node 304", 2000),
-        ("NZXT H440", 2200),
-        ("BitFenix Aurora", 2500),
-        ("Phanteks Eclipse P300", 2800),
-    ],
-}
-
 def main(page: ft.Page):
     
     def open_helpdesk(e=None):
@@ -437,6 +349,7 @@ def main(page: ft.Page):
                     ft.ElevatedButton("Помощь", on_click=open_help_file),
                     ft.ElevatedButton("Создать сборку", on_click=lambda _: page.go("/create")),
                     ft.ElevatedButton("Сравнение комплектующих", on_click=lambda _: page.go("/compare")),
+                    ft.ElevatedButton("Загрузить сборку", on_click=lambda _: load_build_from_file()),
                 ], spacing=10),
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             filter_controls,
@@ -477,10 +390,10 @@ def main(page: ft.Page):
 
         menu_items = [
             ft.PopupMenuItem(
-                text=f"{item[0]} ({item[1]} руб)",
-                on_click=lambda e, item=item: update_callback(title, item, label, price_label)
+                text=f"{name} ({price} руб)",
+                on_click=lambda e, item=(name, price): update_callback(title, item, label, price_label)
             )
-            for item in component_options.get(component_type, [])
+            for name, price in db.get_by_category(component_type)
         ]
 
         popup_menu = ft.PopupMenuButton(
@@ -523,10 +436,10 @@ def main(page: ft.Page):
                 border_radius=5,
             ),
         ], spacing=10, height=50)
-    
-    def build_details_page(page: ft.Page, build_name: str):
-        details = build_details.get(build_name, {})
-        
+
+    def build_details_page(page: ft.Page, build_name: str, loaded_details: dict = None):
+        details = loaded_details if loaded_details else build_details.get(build_name, {})
+
         # Вычисляем общую стоимость изначально по данным сборки
         total_price = sum(item[1] for item in details.values() if isinstance(item, tuple) and len(item) == 2)
         
@@ -569,13 +482,19 @@ def main(page: ft.Page):
                 bgcolor="#FFFFFF",
                 border_radius=5,
             ),
-            ft.ElevatedButton(
-                "Сохранить сборку",
-                width=300,
-                height=50,
-                on_click=lambda e: save_build_to_file(build_name, details)
-            ),
-        ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
+            ft.Row([
+                ft.ElevatedButton(
+                    "Сохранить сборку",
+                    width=140,
+                    on_click=lambda e: save_build_to_file(build_name, details)
+                ),
+                ft.ElevatedButton(
+                    "Копировать в буфер обмена",
+                    width=140,
+                    on_click=lambda e: copy_build_to_clipboard(build_name, details)
+                ),
+            ], spacing=20),
+        ], alignment=ft.MainAxisAlignment.CENTER, spacing=20)
 
         back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
         help_button = ft.ElevatedButton("Помощь", width=100, height=40, on_click=open_help_file)
@@ -626,7 +545,6 @@ def main(page: ft.Page):
                     if item[0] == old_value:
                         total_price -= item[1]
 
-            # Обновляем текущее значение
             current_build[component_title] = new_value[0]
             label.value = new_value[0]
             price_label.value = f"{new_value[1]} рублей"
@@ -975,38 +893,128 @@ def main(page: ft.Page):
 
     def save_build_to_file(build_name: str, build_data: dict):
         try:
-            # Инициализируем скрытое окно Tkinter
             root = tk.Tk()
             root.withdraw()
-            root.attributes("-topmost", True)  # <-- делаем окно поверх всех
+            root.attributes("-topmost", True)
 
-            # Открываем диалог "Сохранить как"
-            default_filename = f"{build_name.replace(' ', '_')}.txt"
+            default_filename = f"{build_name.replace(' ', '_')}.json"
             file_path = filedialog.asksaveasfilename(
-                defaultextension=".txt",
-                filetypes=[("Text files", "*.txt")],
+                defaultextension=".json",
+                filetypes=[("JSON files", "*.json")],
                 initialfile=default_filename,
                 title="Сохранить сборку как...",
-                parent=root  # <-- указываем родителя явно
+                parent=root
             )
 
-            root.destroy()  # Уничтожаем скрытое окно
+            root.destroy()
 
             if not file_path:
-                return  # Отменено пользователем
+                return
 
+            db = ComponentDB()
+
+            # получение ID
+            result = {}
+            for category, component in build_data.items():
+                if isinstance(component, tuple):
+                    name = component[0]
+                elif isinstance(component, str):
+                    name = component
+                else:
+                    continue
+
+                # нахождение ID
+                cursor = db.conn.cursor()
+                cursor.execute("SELECT id FROM components WHERE name = ?", (name,))
+                row = cursor.fetchone()
+                result[category] = row[0] if row else None
+
+            db.close()
+
+            # сохранение
             with open(file_path, "w", encoding="utf-8") as f:
-                f.write(f"Название сборки: {build_name}\n\n")
-                for key, value in build_data.items():
-                    f.write(f"{key}: {value}\n")
+                json.dump({
+                    "build_name": build_name,
+                    "components": result
+                }, f, indent=4, ensure_ascii=False)
 
-            print(f"Сборка успешно сохранена в файл: {file_path}")
+            print(f"Сборка сохранена в файл: {file_path}")
 
         except Exception as e:
             print(f"Ошибка при сохранении сборки: {e}")
 
+    def load_build_from_file():
+        try:
+            root = tk.Tk()
+            root.withdraw()
+            root.attributes("-topmost", True)
+
+            file_path = filedialog.askopenfilename(
+                defaultextension=".json",
+                filetypes=[("JSON files", "*.json")],
+                title="Открыть сборку",
+                parent=root
+            )
+
+            root.destroy()
+
+            if not file_path:
+                return
+
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            build_name = data.get("build_name", "Загруженная сборка")
+            component_ids = data.get("components", {})
+
+            db = ComponentDB()
+
+            build_data = {}
+            for category, component_id in component_ids.items():
+                cursor = db.conn.cursor()
+                cursor.execute("SELECT name, price FROM components WHERE id = ?", (component_id,))
+                row = cursor.fetchone()
+                if row:
+                    build_data[category] = (row[0], row[1])
+                else:
+                    build_data[category] = ("Не найдено", 0)
+
+            db.close()
+
+            # переход на страницу со сборкой
+            page.views.append(build_details_page(page, build_name, loaded_details=build_data))
+            page.update()
+
+        except Exception as e:
+            print(f"Ошибка при загрузке сборки: {e}")
+
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go("/")
+
+    def copy_build_to_clipboard(build_name: str, build_data: dict):
+        try:
+            lines = [f"Название сборки: {build_name}\n"]
+            total = 0
+
+            for key, value in build_data.items():
+                if isinstance(value, tuple):
+                    name, price = value
+                elif isinstance(value, str):
+                    name = value
+                    price = "не указано"
+                else:
+                    continue
+                lines.append(f"{key}: {name} — {price} руб")
+                if isinstance(price, int):
+                    total += price
+
+            lines.append(f"\nИтоговая стоимость: {total} руб")
+            pyperclip.copy("\n".join(lines))
+            print("Сборка скопирована в буфер обмена!")
+
+        except Exception as e:
+            print(f"Ошибка при копировании в буфер: {e}")
+
 
 ft.app(target=main)
