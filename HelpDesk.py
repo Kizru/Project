@@ -346,7 +346,6 @@ def main(page: ft.Page):
             ft.Row([
                 ft.Text("Популярные сборки", size=16),
                 ft.Row([
-                    ft.ElevatedButton("Помощь", on_click=open_help_file),
                     ft.ElevatedButton("Создать сборку", on_click=lambda _: page.go("/create")),
                     ft.ElevatedButton("Сравнение комплектующих", on_click=lambda _: page.go("/compare")),
                     ft.ElevatedButton("Загрузить сборку", on_click=lambda _: load_build_from_file()),
@@ -354,20 +353,8 @@ def main(page: ft.Page):
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             filter_controls,
             builds_container,
-            ft.Container(
-                content=ft.Column([
-                    ft.Row([
-                        ft.Text("Хочу быть в курсе акций и новинок!", size=14),
-                        ft.TextField(label="Введите адрес электронной почты", expand=True),
-                        ft.ElevatedButton("Подписаться"),
-                    ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN, spacing=10),
-                ], spacing=5),
-                padding=10,
-                border=ft.border.all(1, "lightgray"),
-                border_radius=10,
-            ),
             ft.Row([
-                ft.ElevatedButton("Отзывы о сервисе"),
+                ft.ElevatedButton("Помощь", on_click=open_help_file),
                 ft.ElevatedButton("Служба поддержки", on_click=lambda _: page.go("/support")),
             ], alignment=ft.MainAxisAlignment.END, spacing=10),
         ], spacing=20),
@@ -636,18 +623,13 @@ def main(page: ft.Page):
                 
                 page.update()
         
-        header = ft.Row(
-            controls=[
-                ft.Text("Сравнение комплектующих", size=24, weight=ft.FontWeight.BOLD),
-                ft.IconButton(
-                    icon=ft.icons.ARROW_BACK,
-                    on_click=lambda _: page.go("/"),
-                    tooltip="Вернуться на главную"
-                )
-            ],
-            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            width=page.width
-        )
+        back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
+        help_button = ft.ElevatedButton("Помощь", width=100, height=40, on_click=open_help_file)
+
+        header = ft.Row([
+            ft.Text("Сравнение комплектующих", size=24, weight=ft.FontWeight.BOLD),
+            ft.Row([back_button, help_button], spacing=10),
+        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         
         # Создаем выпадающий список для выбора типа компонента
         component_type_dropdown = ft.Dropdown(
@@ -723,67 +705,13 @@ def main(page: ft.Page):
         return ft.View("/compare", controls=[content], scroll=ft.ScrollMode.AUTO)
 
     def support_page(page: ft.Page):
-        message_display = ft.Text("", color=ft.colors.RED, size=14)
-        
-        # Сначала создаем все элементы формы
-        name_field = ft.TextField(label="Ваше имя", width=400)
-        email_field = ft.TextField(label="Ваш email для связи", width=400)
-        issue_field = ft.TextField(label="Тема проблемы", width=400)
-        message_field = ft.TextField(
-            label="Опишите Вашу проблему", 
-            multiline=True, 
-            min_lines=3,
-            max_lines=5,
-            width=400
-        )
-        
-        def submit_form(e):
-            if not name_field.value:
-                message_display.value = "Вы заполнили не все поля!"
-                message_display.color = ft.colors.RED
-                page.update()
-                return
-            if not email_field.value:
-                message_display.value = "Вы заполнили не все поля!"
-                message_display.color = ft.colors.RED
-                page.update()
-                return
-            if not issue_field.value:
-                message_display.value = "Вы заполнили не все поля!"
-                message_display.color = ft.colors.RED
-                page.update()
-                return
-            if not message_field.value:
-                message_display.value = "Вы заполнили не все поля!"
-                message_display.color = ft.colors.RED
-                page.update()
-                return
-                
-            # Здесь должна быть реальная отправка формы
-            print(f"Отправлено: {name_field.value}, {email_field.value}")
-            
-            message_display.value = "Заявка успешно отправлена! Ожидайте ответ от техподдержки"
-            message_display.color = ft.colors.GREEN
-            
-            name_field.value = ""
-            email_field.value = ""
-            issue_field.value = ""
-            message_field.value = ""
-            page.update()
-        
-        # Создаем заголовок
-        header = ft.Row(
-            controls=[
-                ft.Text("Служба поддержки", size=24, weight=ft.FontWeight.BOLD),
-                ft.IconButton(
-                    icon=ft.icons.ARROW_BACK,
-                    tooltip="Вернуться на главную",
-                    on_click=lambda _: page.go("/")
-                ),
-            ],
-            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            width=page.width
-        )
+        back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
+        help_button = ft.ElevatedButton("Помощь", width=100, height=40, on_click=open_help_file)
+
+        header = ft.Row([
+            ft.Text("Служба поддержки", size=24, weight=ft.FontWeight.BOLD),
+            ft.Row([back_button, help_button], spacing=10),
+        ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
         
         # Создаем основную структуру страницы
         content = ft.Column(
@@ -802,39 +730,15 @@ def main(page: ft.Page):
                         ft.ExpansionTile(
                             title=ft.Text("Как связаться с поддержкой?"),
                             controls=[
-                                ft.ListTile(title=ft.Text("Используйте форму ниже или контактные данные в конце страницы."))
+                                ft.ListTile(title=ft.Text("Используйте контактные данные, указанные в конце страницы."))
                             ]
                         ),
                         ft.ExpansionTile(
                             title=ft.Text("Какие часы работы у поддержки?"),
                             controls=[
-                                ft.ListTile(title=ft.Text("Мы работаем 24/7."))
+                                ft.ListTile(title=ft.Text("Мы работаем ежедневно с 8:00 до 17:00 по Перми."))
                             ]
                         ),
-                    ],
-                    spacing=10,
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER
-                ),
-                
-                ft.Divider(),
-                
-                ft.Text("Форма обращения в поддержку", 
-                       size=20, 
-                       weight=ft.FontWeight.BOLD,
-                       text_align=ft.TextAlign.CENTER),
-                
-                ft.Column(
-                    controls=[
-                        name_field,
-                        email_field,
-                        issue_field,
-                        message_field,
-                        message_display,
-                        ft.ElevatedButton(
-                            "Отправить", 
-                            on_click=submit_form,
-                            width=400
-                        )
                     ],
                     spacing=10,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER
@@ -850,12 +754,16 @@ def main(page: ft.Page):
                 ft.Column(
                     controls=[
                         ft.ListTile(
-                            leading=ft.Icon(ft.icons.PHONE),
-                            title=ft.Text("Телефон: +7 (123) 456-78-90")
+                            leading=ft.Icon(ft.icons.EMAIL),
+                            title=ft.Text("Email (Вронский Михаил Александрович): mavronskii@edu.hse.ru")
                         ),
                         ft.ListTile(
                             leading=ft.Icon(ft.icons.EMAIL),
-                            title=ft.Text("Email: support@example.com")
+                            title=ft.Text("Email (Проскуряков Егор Андреевич): eaproskuriakov@edu.hse.ru")
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.EMAIL),
+                            title=ft.Text("Email (Туров Всеволод Алексеевич): vsalturov@edu.hse.ru")
                         ),
                     ],
                     spacing=5,
