@@ -15,9 +15,8 @@ def check_processor_compatibility(processor, build):
 
     # 1. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
-        print(motherboard_details)
         # Сокет
         if processor["socket"] != motherboard_details["socket"]:
             compatibility_issues.append(
@@ -33,8 +32,6 @@ def check_processor_compatibility(processor, build):
             compatibility_issues.append(
                 f"Тип памяти процессора ({processor['memory_type']}) не совместим с материнской платой ({motherboard_details['memory_type']}).")
 
-        print(motherboard_details)
-        print(motherboard_details["memory_slots"])
         # Количество каналов памяти
         if processor["memory_channels"] > motherboard_details["memory_slots"]:
             compatibility_issues.append(
@@ -58,7 +55,7 @@ def check_processor_compatibility(processor, build):
 
     # 2. Проверка совместимости с оперативной памятью
     ram = build.get("Оперативная память")
-    if ram:
+    if ram[0]:
         ram_details = db.get_component_details(db.get_id_by_name(ram[0]))  # Получаем данные оперативной памяти
         if processor["memory_type"] != ram_details["type"]:
             compatibility_issues.append(
@@ -70,7 +67,7 @@ def check_processor_compatibility(processor, build):
 
     # 3. Проверка совместимости с охлаждением
     cooler = build.get("Охлаждение")
-    if cooler:
+    if cooler[0]:
         cooler_details = db.get_component_details(db.get_id_by_name(cooler[0]))  # Получаем данные охлаждения
         if processor["tdp"] > cooler_details["tdp_support"]:
             compatibility_issues.append(
@@ -78,7 +75,7 @@ def check_processor_compatibility(processor, build):
 
     # 4. Проверка совместимости с блоком питания
     psu = build.get("Блок питания")
-    if psu:
+    if psu[0]:
         psu_details = db.get_component_details(db.get_id_by_name(psu[0]))  # Получаем данные блока питания
         total_power_consumption = sum(
             db.get_component_details(db.get_id_by_name(component[0])).get("tdp", 0)
@@ -91,7 +88,7 @@ def check_processor_compatibility(processor, build):
 
     # 5. Проверка наличия интегрированной графики (если видеокарты нет)
     gpu = build.get("Видеокарта")
-    if not gpu and not processor["integrated_graphics"]:
+    if not gpu[0] and not processor["integrated_graphics"]:
         compatibility_issues.append("Видеокарта отсутствует, но процессор не имеет интегрированной графики.")
 
     return compatibility_issues
@@ -108,7 +105,7 @@ def check_graphics_card_compatibility(graphics_card, build):
 
     # 1. Проверка совместимости с корпусом
     case = build.get("Корпус")
-    if case:
+    if case[0]:
         case_details = db.get_component_details(db.get_id_by_name(case[0]))  # Получаем данные корпуса
 
         # Длина видеокарты
@@ -118,7 +115,7 @@ def check_graphics_card_compatibility(graphics_card, build):
 
     # 2. Проверка совместимости с блоком питания
     psu = build.get("Блок питания")
-    if psu:
+    if psu[0]:
         psu_details = db.get_component_details(db.get_id_by_name(psu[0]))  # Получаем данные блока питания
 
         # Требуемые разъемы питания
@@ -141,7 +138,7 @@ def check_graphics_card_compatibility(graphics_card, build):
 
     # 3. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
 
         # Версия PCI Express
@@ -163,7 +160,7 @@ def check_motherboard_compatibility(motherboard, build):
 
     # 1. Проверка совместимости с процессором
     processor = build.get("Процессор")
-    if processor:
+    if processor[0]:
         processor_details = db.get_component_details(db.get_id_by_name(processor[0]))  # Получаем данные процессора
 
         # Сокет
@@ -183,7 +180,7 @@ def check_motherboard_compatibility(motherboard, build):
 
     # 2. Проверка совместимости с оперативной памятью
     ram = build.get("Оперативная память")
-    if ram:
+    if ram[0]:
         ram_details = db.get_component_details(db.get_id_by_name(ram[0]))  # Получаем данные оперативной памяти
 
         # Количество слотов RAM
@@ -205,7 +202,7 @@ def check_motherboard_compatibility(motherboard, build):
 
     # 3. Проверка совместимости с видеокартой
     gpu = build.get("Видеокарта")
-    if gpu:
+    if gpu[0]:
         gpu_details = db.get_component_details(db.get_id_by_name(gpu[0]))  # Получаем данные видеокарты
 
         # Версия PCI Express
@@ -215,7 +212,7 @@ def check_motherboard_compatibility(motherboard, build):
 
     # 4. Проверка совместимости с корпусом
     case = build.get("Корпус")
-    if case:
+    if case[0]:
         case_details = db.get_component_details(db.get_id_by_name(case[0]) ) # Получаем данные корпуса
 
         # Форм-фактор
@@ -238,7 +235,7 @@ def check_ram_compatibility(ram, build):
 
     # 1. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
 
         # Тип памяти
@@ -264,7 +261,7 @@ def check_ram_compatibility(ram, build):
 
     # 2. Проверка совместимости с процессором
     processor = build.get("Процессор")
-    if processor:
+    if processor[0]:
         processor_details = db.get_component_details(db.get_id_by_name(processor[0]))  # Получаем данные процессора
 
         # Тип памяти
@@ -286,7 +283,7 @@ def check_storage_compatibility(storage, build):
 
     # 1. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
 
         # Интерфейс подключения
@@ -302,7 +299,7 @@ def check_storage_compatibility(storage, build):
 
     # 2. Проверка совместимости с корпусом
     case = build.get("Корпус")
-    if case:
+    if case[0]:
         case_details = db.get_component_details(db.get_id_by_name(case[0]))  # Получаем данные корпуса
 
         # Форм-фактор
@@ -314,7 +311,7 @@ def check_storage_compatibility(storage, build):
 
     # 3. Проверка совместимости с блоком питания (для HDD)
     psu = build.get("Блок питания")
-    if psu and storage["type"] == "HDD":
+    if psu[0] and storage["type"] == "HDD":
         psu_details = db.get_component_details(db.get_id_by_name(psu[0]))  # Получаем данные блока питания
 
         # Потребление энергии
@@ -341,7 +338,7 @@ def check_power_supply_compatibility(power_supply, build):
 
     # 1. Проверка совместимости с корпусом
     case = build.get("Корпус")
-    if case:
+    if case[0]:
         case_details = db.get_component_details(db.get_id_by_name(case[0]))  # Получаем данные корпуса
 
         # Форм-фактор
@@ -361,9 +358,7 @@ def check_power_supply_compatibility(power_supply, build):
 
     # 3. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
-        motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
-
+    if motherboard[0]:
         # Разъемы питания материнской платы
         if power_supply["main_connector"] != "24-pin ATX":
             compatibility_issues.append(
@@ -371,7 +366,7 @@ def check_power_supply_compatibility(power_supply, build):
 
     # 4. Проверка совместимости с видеокартой
     gpu = build.get("Видеокарта")
-    if gpu:
+    if gpu[0]:
         gpu_details = db.get_component_details(db.get_id_by_name(gpu[0]))  # Получаем данные видеокарты
 
         # Разъемы питания видеокарты
@@ -384,7 +379,7 @@ def check_power_supply_compatibility(power_supply, build):
 
     # 5. Проверка количества SATA разъемов
     storage = build.get("SSD") or build.get("Жесткий диск")
-    if storage:
+    if storage[0]:
         storage_details = db.get_component_details(db.get_id_by_name(storage[0]))  # Получаем данные накопителя
 
         # Количество SATA разъемов
@@ -406,7 +401,7 @@ def check_case_compatibility(case, build):
 
     # 1. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
 
         # Форм-фактор
@@ -417,7 +412,7 @@ def check_case_compatibility(case, build):
 
     # 2. Проверка совместимости с видеокартой
     gpu = build.get("Видеокарта")
-    if gpu:
+    if gpu[0]:
         gpu_details = db.get_component_details(db.get_id_by_name(gpu[0]))  # Получаем данные видеокарты
 
         # Максимальная длина видеокарты
@@ -427,7 +422,7 @@ def check_case_compatibility(case, build):
 
     # 3. Проверка совместимости с системой охлаждения
     cooler = build.get("Охлаждение")
-    if cooler:
+    if cooler[0]:
         cooler_details = db.get_component_details(db.get_id_by_name(cooler[0]))  # Получаем данные системы охлаждения
 
         # Максимальная высота кулера
@@ -437,7 +432,7 @@ def check_case_compatibility(case, build):
 
     # 4. Проверка совместимости с блоком питания
     psu = build.get("Блок питания")
-    if psu:
+    if psu[0]:
         psu_details = db.get_component_details(db.get_id_by_name(psu[0]))  # Получаем данные блока питания
 
         # Форм-фактор блока питания
@@ -447,7 +442,7 @@ def check_case_compatibility(case, build):
 
     # 5. Проверка количества отсеков для накопителей
     storage = build.get("SSD") or build.get("Жесткий диск")
-    if storage:
+    if storage[0]:
         storage_details = db.get_component_details(db.get_id_by_name(storage[0]))  # Получаем данные накопителя
 
         # Количество отсеков для SSD/HDD
@@ -470,7 +465,7 @@ def check_cooler_compatibility(cooler, build):
 
     # 1. Проверка совместимости с процессором
     processor = build.get("Процессор")
-    if processor:
+    if processor[0]:
         processor_details = db.get_component_details(db.get_id_by_name(processor[0]))  # Получаем данные процессора
 
         # Совместимость сокетов
@@ -485,7 +480,7 @@ def check_cooler_compatibility(cooler, build):
 
     # 2. Проверка совместимости с корпусом
     case = build.get("Корпус")
-    if case:
+    if case[0]:
         case_details = db.get_component_details(db.get_id_by_name(case[0]))  # Получаем данные корпуса
 
         # Максимальная высота кулера
@@ -495,7 +490,7 @@ def check_cooler_compatibility(cooler, build):
 
     # 3. Проверка совместимости с материнской платой
     motherboard = build.get("Материнская плата")
-    if motherboard:
+    if motherboard[0]:
         motherboard_details = db.get_component_details(db.get_id_by_name(motherboard[0]))  # Получаем данные материнской платы
 
         # Разъемы вентиляторов
@@ -514,14 +509,16 @@ def check_full_build_compatibility(build):
     :return: Список проблем совместимости.
     """
     compatibility_issues = []
-    print(build)
+
     for category, component in build.items():
         if isinstance(component, tuple) and len(component) == 2:
             component_name = component[0]
             component_id = db.get_id_by_name(component_name)
 
-            component_details = db.get_component_details(component_id)
+            if component_id is None:
+                return
 
+            component_details = db.get_component_details(component_id)
             print(build)
             if category == "Процессор":
                 compatibility_issues.extend(check_processor_compatibility(component_details, build))

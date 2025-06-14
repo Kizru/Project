@@ -410,10 +410,13 @@ class ComponentDB:
 
     def get_component_details(self, component_id):
         cursor = self.conn.cursor()
-        category = self.get_category_by_id(component_id) + "s"
-        if category == "rams": category = "ram"
-        if category == "storages": category = "storage"
-        if category == "power_supplys": category = "power_supplies"
+        try:
+            category = self.get_category_by_id(component_id) + "s"
+            if category == "rams": category = "ram"
+            if category == "storages": category = "storage"
+            if category == "power_supplys": category = "power_supplies"
+        except TypeError:
+            return {}
         cursor.execute(f'''
             SELECT c.id, c.name, c.price, c.description, c.manufacturer, p.*
             FROM components c

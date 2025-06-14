@@ -204,6 +204,7 @@ def main(page: ft.Page):
         details = loaded_details if loaded_details else build_details.get(build_name, {})
         total_price = sum(item[1] for item in details.values() if isinstance(item, tuple) and len(item) == 2)
         total_cost_label = ft.Text(f"Итоговая стоимость ПК\n{total_price} рублей", size=16, weight=ft.FontWeight.BOLD)
+        compatibility_result = ft.Text("", size=14, color=ft.colors.RED)
 
         def update_component(component_title, new_value, label, price_label):
             nonlocal total_price
@@ -215,6 +216,16 @@ def main(page: ft.Page):
             price_label.value = f"{new_value[1]} рублей"
             total_price += new_value[1]
             total_cost_label.value = f"Итоговая стоимость ПК\n{total_price} рублей"
+            page.update()
+
+        def check_compatibility_button_click(e):
+            issues = check_full_build_compatibility(details)
+            if not issues:
+                compatibility_result.value = "Сборка полностью совместима."
+                compatibility_result.color = ft.colors.GREEN
+            else:
+                compatibility_result.value = "Проблемы совместимости:\n" + "\n".join(issues)
+                compatibility_result.color = ft.colors.RED
             page.update()
 
         table = ft.Column([
@@ -238,6 +249,12 @@ def main(page: ft.Page):
                 bgcolor="#FFFFFF",
                 border_radius=5,
             ),
+            ft.ElevatedButton(
+                "Проверить совместимость",
+                width=300,
+                height=50,
+                on_click=check_compatibility_button_click,
+            ),
             ft.Row([
                 ft.ElevatedButton(
                     "Сохранить сборку",
@@ -250,6 +267,7 @@ def main(page: ft.Page):
                     on_click=lambda e: copy_build_to_clipboard(build_name, details)
                 ),
             ], spacing=20),
+            compatibility_result,
         ], alignment=ft.MainAxisAlignment.CENTER, spacing=20)
 
         back_button = ft.ElevatedButton("Назад", on_click=lambda _: page.go("/"), width=100, height=40)
@@ -292,11 +310,9 @@ def main(page: ft.Page):
 
         def update_component(component_title, new_value, label, price_label):
             nonlocal total_price
-            if current_build.get(component_title):
-                old_value = current_build[component_title]
-                for item in db.get_by_category(component_title):
-                    if item[0] == old_value:
-                        total_price -= item[1]
+            old_value = current_build.get(component_title)
+            if isinstance(old_value, tuple) and len(old_value) == 2:
+                total_price -= old_value[1]
             current_build[component_title] = new_value
             label.value = new_value[0]
             price_label.value = f"{new_value[1]} рублей"
