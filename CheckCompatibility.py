@@ -502,24 +502,14 @@ def check_cooler_compatibility(cooler, build):
     return compatibility_issues
 
 def check_full_build_compatibility(build):
-    """
-    Проверяет совместимость всей сборки.
-
-    :param build: Словарь текущей сборки.
-    :return: Список проблем совместимости.
-    """
     compatibility_issues = []
-
     for category, component in build.items():
         if isinstance(component, tuple) and len(component) == 2:
             component_name = component[0]
             component_id = db.get_id_by_name(component_name)
-
             if component_id is None:
                 return
-
             component_details = db.get_component_details(component_id)
-            print(build)
             if category == "Процессор":
                 compatibility_issues.extend(check_processor_compatibility(component_details, build))
             elif category == "Видеокарта":

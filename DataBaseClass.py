@@ -1,5 +1,4 @@
 import sqlite3
-from email.contentmanager import raw_data_manager
 
 
 class ComponentDB:
@@ -18,7 +17,7 @@ class ComponentDB:
                     price INTEGER NOT NULL,
                     description TEXT,
                     manufacturer TEXT,
-                    category TEXT NOT NULL  -- Добавлено поле "category"
+                    category TEXT NOT NULL
                 )
             ''')
 

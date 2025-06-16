@@ -230,14 +230,14 @@ def main(page: ft.Page):
 
         table = ft.Column([
             create_table_row("Процессор", details.get("Процессор", ("...", 0)), "processor", update_component),
-            create_table_row("Охлаждение", details.get("Охлаждение", ("...", 0)), "Охлаждение", update_component),
-            create_table_row("Материнская плата", details.get("Материнская плата", ("...", 0)), "Материнская плата", update_component),
-            create_table_row("Оперативная память", details.get("Оперативная память", ("...", 0)), "Оперативная память", update_component),
-            create_table_row("SSD", details.get("SSD", ("...", 0)), "SSD", update_component),
-            create_table_row("Жесткий диск", details.get("Жесткий диск", ("...", 0)), "Жесткий диск", update_component),
-            create_table_row("Видеокарта", details.get("Видеокарта", ("...", 0)), "Видеокарта", update_component),
-            create_table_row("Блок питания", details.get("Блок питания", ("...", 0)), "Блок питания", update_component),
-            create_table_row("Корпус", details.get("Корпус", ("...", 0)), "Корпус", update_component),
+            create_table_row("Охлаждение", details.get("Охлаждение", ("...", 0)), "cooler", update_component),
+            create_table_row("Материнская плата", details.get("Материнская плата", ("...", 0)), "motherboard", update_component),
+            create_table_row("Оперативная память", details.get("Оперативная память", ("...", 0)), "ram", update_component),
+            create_table_row("SSD", details.get("SSD", ("...", 0)), "storage", update_component),
+            create_table_row("Жесткий диск", details.get("Жесткий диск", ("...", 0)), "storage", update_component),
+            create_table_row("Видеокарта", details.get("Видеокарта", ("...", 0)), "graphics_card", update_component),
+            create_table_row("Блок питания", details.get("Блок питания", ("...", 0)), "power_supply", update_component),
+            create_table_row("Корпус", details.get("Корпус", ("...", 0)), "case", update_component),
         ], spacing=10)
 
         right_section = ft.Column([
